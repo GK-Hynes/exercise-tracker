@@ -1,5 +1,9 @@
 # Exercise Tracker
 
+An exercise tracker app built with Node and MongoDB for the freeCodeCamp APIs and Microservices Certificate.
+
+### Requirements
+
 - You can `POST` to `/api/exercise/new-user` with form data `username` to create a new user. The returned response will be an object with `username` and `\_id properties.`
 
 - You can make a `GET` request to `api/exercise/users` to get an array of all users. Each element in the array is an object containing a user's `username` and `\_id`.
