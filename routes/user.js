@@ -18,7 +18,7 @@ router.post("/api/exercise/new-user", async (req, res) => {
       });
       await user.save();
       user = await User.findOne({ username });
-      res.json({ username: user.username, _id: user._id });
+      return res.json({ username: user.username, _id: user._id });
     }
   } catch (error) {
     console.error(error);
@@ -27,10 +27,31 @@ router.post("/api/exercise/new-user", async (req, res) => {
 });
 
 // Get array of all users
-router.get("/api/exercise/users", (req, res) => {});
+router.get("/api/exercise/users", async (req, res) => {
+  const users = await User.find();
+  return users;
+});
 
 // Add new exercise session
-router.post("/api/exercise/add", (req, res) => {});
+router.post("/api/exercise/add", async (req, res) => {
+  const { userId, description, duration } = req.body;
+  const date = req.body.date || Date.now();
+
+  try {
+    let session;
+    session = new Session({
+      userId,
+      description,
+      duration
+    });
+    session.save();
+
+    // TODO - return user object with exercise session details
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Server error");
+  }
+});
 
 // Get a user's exercise log
 router.get("/api/exercise/log", (req, res) => {});
