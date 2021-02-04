@@ -17,7 +17,7 @@ router.post("/api/exercise/new-user", async (req, res) => {
         username
       });
       await user.save();
-      user = await User.findOne({ username });
+      // user = await User.findOne({ username });
       return res.json({ username: user.username, _id: user._id });
     }
   } catch (error) {
@@ -46,7 +46,11 @@ router.post("/api/exercise/add", async (req, res) => {
     });
     session.save();
 
-    // TODO - return user object with exercise session details
+    // Return user object with exercise log details
+    const user = await User.findOne({ _id: userId });
+    user.log.push(session);
+    user.save();
+    return res.json({ user });
   } catch (error) {
     console.error(error);
     res.status(500).json("Server error");

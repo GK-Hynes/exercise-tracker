@@ -15,9 +15,8 @@ const sessionSchema = new mongoose.Schema({
     default: Date.now
   },
   userId: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: "Please provide a userId"
+    type: String,
+    require: "Please provide a userId"
   }
 });
 
