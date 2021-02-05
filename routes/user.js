@@ -58,6 +58,18 @@ router.post("/api/exercise/add", async (req, res) => {
 });
 
 // Get a user's exercise log
-router.get("/api/exercise/log", (req, res) => {});
+router.get("/api/exercise/log", async (req, res) => {
+  const { userId } = req.query;
+
+  try {
+    const user = await User.findOne({ _id: userId });
+    // user.populate(log);
+    console.log(user);
+    return res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Server error");
+  }
+});
 
 module.exports = router;
