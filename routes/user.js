@@ -35,14 +35,15 @@ router.get("/api/exercise/users", async (req, res) => {
 // Add new exercise session
 router.post("/api/exercise/add", async (req, res) => {
   const { userId, description, duration } = req.body;
-  const date = req.body.date || Date.now();
+  const date = req.body.date || new Date().toISOString().substring(0, 10);
 
   try {
     let session;
     session = new Session({
       userId,
       description,
-      duration
+      duration,
+      date
     });
     session.save();
 
@@ -62,9 +63,10 @@ router.get("/api/exercise/log", async (req, res) => {
   const { userId } = req.query;
 
   try {
-    const user = await User.findOne({ _id: userId });
-    // user.populate(log);
-    console.log(user);
+    let user = await User.findOne({ _id: userId });
+    if (req.query.limit) {
+      user.log = user.log.slice(0, req.query.limit);
+    }
     return res.json(user);
   } catch (error) {
     console.error(error);
