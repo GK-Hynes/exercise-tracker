@@ -11,8 +11,7 @@ const sessionSchema = new mongoose.Schema({
     required: "Please enter a duration in minutes"
   },
   date: {
-    type: Date,
-    default: Date.now
+    type: String
   },
   userId: {
     type: String,
