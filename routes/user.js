@@ -27,13 +27,14 @@ router.post("/api/exercise/new-user", async (req, res) => {
 
 // Get array of all users
 router.get("/api/exercise/users", async (req, res) => {
-  const users = await User.find();
-  return users;
+  const users = await User.find({});
+  return res.json(users);
 });
 
 // Add new exercise session
 router.post("/api/exercise/add", async (req, res) => {
-  const { userId, description, duration } = req.body;
+  const { userId, description } = req.body;
+  const duration = parseInt(req.body.duration);
   const date = req.body.date || new Date().toISOString().substring(0, 10);
 
   try {
@@ -50,7 +51,13 @@ router.post("/api/exercise/add", async (req, res) => {
     const user = await User.findOne({ _id: userId });
     user.log.push(session);
     user.save();
-    return res.json({ user });
+    return res.json({
+      _id: user._id,
+      username: user.username,
+      date: new Date(date).toDateString(),
+      duration,
+      description
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json("Server error");
