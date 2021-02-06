@@ -16,8 +16,7 @@ router.post("/api/exercise/new-user", async (req, res) => {
       user = new User({
         username
       });
-      await user.save();
-      // user = await User.findOne({ username });
+      user.save();
       return res.json({ username: user.username, _id: user._id });
     }
   } catch (error) {
@@ -64,8 +63,20 @@ router.get("/api/exercise/log", async (req, res) => {
 
   try {
     let user = await User.findOne({ _id: userId });
+    // Limit exercise log
     if (req.query.limit) {
       user.log = user.log.slice(0, req.query.limit);
+    }
+    // Filter by dates
+    if (req.query.from || req.query.to) {
+      const startDate =
+        new Date(req.query.from).getTime() || new Date(0).getTime();
+      const endDate = new Date(req.query.to).getTime() || new Date().getTime();
+
+      user.log = user.log.filter((session) => {
+        const sessionDate = new Date(session.date).getTime();
+        return sessionDate >= startDate && sessionDate <= endDate;
+      });
     }
     return res.json(user);
   } catch (error) {
