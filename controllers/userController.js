@@ -1,11 +1,7 @@
-const express = require("express");
 const User = require("../models/User");
 const Session = require("../models/Session");
 
-const router = express.Router();
-
-// Create new user
-router.post("/api/exercise/new-user", async (req, res) => {
+exports.createUser = async (req, res) => {
   const username = req.body.username;
 
   try {
@@ -23,16 +19,14 @@ router.post("/api/exercise/new-user", async (req, res) => {
     console.error(error);
     res.status(500).json("Server error");
   }
-});
+};
 
-// Get array of all users
-router.get("/api/exercise/users", async (req, res) => {
+exports.getUsers = async (req, res) => {
   const users = await User.find({});
   return res.json(users);
-});
+};
 
-// Add new exercise session
-router.post("/api/exercise/add", async (req, res) => {
+exports.addSession = async (req, res) => {
   const { userId, description } = req.body;
   const duration = parseInt(req.body.duration);
   const date = req.body.date || new Date().toISOString().substring(0, 10);
@@ -62,10 +56,9 @@ router.post("/api/exercise/add", async (req, res) => {
     console.error(error);
     res.status(500).json("Server error");
   }
-});
+};
 
-// Get a user's exercise log
-router.get("/api/exercise/log", async (req, res) => {
+exports.getUserLog = async (req, res) => {
   const { userId } = req.query;
 
   try {
@@ -90,6 +83,4 @@ router.get("/api/exercise/log", async (req, res) => {
     console.error(error);
     res.status(500).json("Server error");
   }
-});
-
-module.exports = router;
+};
