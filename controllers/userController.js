@@ -2,9 +2,8 @@ const User = require("../models/User");
 const Session = require("../models/Session");
 
 exports.createUser = async (req, res) => {
-  const username = req.body.username;
-
   try {
+    const username = req.body.username;
     let user = await User.findOne({ username });
     if (user) {
       res.json({ username: user.username, _id: user._id });
@@ -27,11 +26,11 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.addSession = async (req, res) => {
-  const { userId, description } = req.body;
-  const duration = parseInt(req.body.duration);
-  const date = req.body.date || new Date().toISOString().substring(0, 10);
-
   try {
+    const { userId, description } = req.body;
+    const duration = parseInt(req.body.duration);
+    const date = req.body.date || new Date().toISOString().substring(0, 10);
+
     let session;
     session = new Session({
       userId,
@@ -59,9 +58,9 @@ exports.addSession = async (req, res) => {
 };
 
 exports.getUserLog = async (req, res) => {
-  const { userId } = req.query;
-
   try {
+    const { userId } = req.query;
+
     let user = await User.findOne({ _id: userId });
     // Limit exercise log
     if (req.query.limit) {
