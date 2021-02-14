@@ -1,6 +1,10 @@
 # Exercise Tracker
 
-An exercise tracker app built with Node and MongoDB for the freeCodeCamp APIs and Microservices Certificate.
+An exercise tracker app built with Node and MongoDB for the [freeCodeCamp](https://www.freecodecamp.org/) APIs and Microservices Certificate.
+
+[View live project](https://exercise-tracker.gkhynes.repl.co)
+
+![Screenshot of exercise tracker project](https://res.cloudinary.com/gerhynes/image/upload/q_auto/f_auto/v1613343302/Screenshot_2021-02-14_Exercise_Tracker_Free_Code_Camp_ytit2m.png)
 
 ### Requirements
 
